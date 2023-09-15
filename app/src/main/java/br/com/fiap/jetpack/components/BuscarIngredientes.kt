@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -16,15 +17,23 @@ import br.com.fiap.jetpack.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BuscarIngredientes(texto: String = "") {
+fun BuscarIngredientes(
+    texto: String = "",
+    changeValue: (ing: String) -> Unit,
+    value: String,
+    getIngredientsByName: () -> Unit
+) {
 
     TextField(
-        value = "",
-        onValueChange = {},
+        value = value,
+        onValueChange = changeValue,
         label = {
             Text(text = texto)
         },
         trailingIcon = {
+            IconButton(onClick = getIngredientsByName) {
+                
+            }
             Icon(
                 painter = painterResource(id = R.drawable.search_24),
                 contentDescription = "Buscar"

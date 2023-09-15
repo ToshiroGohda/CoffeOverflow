@@ -19,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +38,8 @@ import br.com.fiap.jetpack.components.BotaoIngrediente
 import br.com.fiap.jetpack.components.BotaoVoltar
 import br.com.fiap.jetpack.components.BuscarIngredientes
 import br.com.fiap.jetpack.components.IngredientesColumn
+import br.com.fiap.jetpack.repository.getAllIngredients
+import br.com.fiap.jetpack.repository.getIngredientsByName
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,20 +48,16 @@ fun TelaIngredientes(telaIngredientesViewModel: TelaIngredientesViewModel) {
     //val comida = remember { mutableStateListOf<String>() }
     val comida by telaIngredientesViewModel.comida.observeAsState(initial = listOf<String>())
 
-    val ingredientes = listOf<String>(
-        "Frango",
-        "Arroz",
-        "Feijão",
-        "Frango",
-        "Arroz",
-        "Feijão",
-        "Frango",
-        "Arroz",
-        "Feijão"
-    )
+    var valorBusca by remember {
+        mutableStateOf("")
+    }
+
+    var listIngredients by remember {
+        mutableStateOf(getIngredientsByName(valorBusca))
+    }
 
 
-    Column( 
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
@@ -118,7 +118,16 @@ fun TelaIngredientes(telaIngredientesViewModel: TelaIngredientesViewModel) {
             color = Color(189, 71, 71)
         ) {}
 
-        BuscarIngredientes(texto = "Buscar Ingredientes")
+        BuscarIngredientes(
+            texto = "Buscar Ingredientes",
+            value = valorBusca,
+            changeValue = {
+                valorBusca = it
+            },
+            getIngredientsByName = {
+                listIngredients = getIngredientsByName(valorBusca)
+            }
+        )
 
 
 
@@ -131,7 +140,7 @@ fun TelaIngredientes(telaIngredientesViewModel: TelaIngredientesViewModel) {
         ) {
 
             LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 110.dp)) {
-                items(ingredientes) { ingrediente ->
+                items(listIngredients) { ingrediente ->
                     BotaoIngrediente(nome = ingrediente)
                 }
             }
