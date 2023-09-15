@@ -1,5 +1,6 @@
 package br.com.fiap.jetpack.Telas
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -18,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,8 +38,11 @@ import br.com.fiap.jetpack.components.BotaoIngrediente
 import br.com.fiap.jetpack.components.BotaoVoltar
 import br.com.fiap.jetpack.components.BuscarIngredientes
 import br.com.fiap.jetpack.components.IngredientesColumn
-import br.com.fiap.jetpack.repository.getAllIngredients
-import br.com.fiap.jetpack.repository.getIngredientsByName
+import br.com.fiap.jetpack.model.Ingredients
+import br.com.fiap.jetpack.service.RetroFitFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,8 +55,28 @@ fun TelaIngredientes(telaIngredientesViewModel: TelaIngredientesViewModel) {
         mutableStateOf("")
     }
 
+    var call = RetroFitFactory().getIngredientsService().getAllIngredients()
+
+
+    call.enqueue(object : Callback<List<Ingredients>>{
+        override fun onResponse(
+            call: Call<List<Ingredients>>,
+            response: Response<List<Ingredients>>
+        ) {
+            Log.i("Teste", "onResponse: ${response.message()}")
+        }
+
+        override fun onFailure(call: Call<List<Ingredients>>, t: Throwable) {
+            Log.i("Teste", "onResponse: ${t.message}")
+        }
+
+    })
+
+
     var listIngredients by remember {
-        mutableStateOf(getIngredientsByName(valorBusca))
+        mutableStateOf(listOf<Ingredients>(
+
+        ))
     }
 
 
@@ -125,7 +148,7 @@ fun TelaIngredientes(telaIngredientesViewModel: TelaIngredientesViewModel) {
                 valorBusca = it
             },
             getIngredientsByName = {
-                listIngredients = getIngredientsByName(valorBusca)
+                // listIngredients = getIngredientsByName(valorBusca)
             }
         )
 
@@ -141,7 +164,7 @@ fun TelaIngredientes(telaIngredientesViewModel: TelaIngredientesViewModel) {
 
             LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 110.dp)) {
                 items(listIngredients) { ingrediente ->
-                    BotaoIngrediente(nome = ingrediente)
+                    BotaoIngrediente(nome = ingrediente.name)
                 }
             }
 
