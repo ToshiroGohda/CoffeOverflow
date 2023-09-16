@@ -1,6 +1,5 @@
 package br.com.fiap.jetpack.Telas
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -17,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -38,46 +38,31 @@ import br.com.fiap.jetpack.components.BotaoIngrediente
 import br.com.fiap.jetpack.components.BotaoVoltar
 import br.com.fiap.jetpack.components.BuscarIngredientes
 import br.com.fiap.jetpack.components.IngredientesColumn
-import br.com.fiap.jetpack.model.Ingredients
-import br.com.fiap.jetpack.service.RetroFitFactory
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaIngredientes(telaIngredientesViewModel: TelaIngredientesViewModel) {
+fun TelaIngredientes(viewModel: TelaIngredientesViewModel) {
 
     //val comida = remember { mutableStateListOf<String>() }
-    val comida by telaIngredientesViewModel.comida.observeAsState(initial = listOf<String>())
+    val comida by viewModel.comida.observeAsState(initial = listOf<String>())
 
     var valorBusca by remember {
         mutableStateOf("")
     }
 
-    var call = RetroFitFactory().getIngredientsService().getAllIngredients()
+    val listIngredients by viewModel.listIngredients.observeAsState(emptyList())
 
-
-    call.enqueue(object : Callback<List<Ingredients>>{
-        override fun onResponse(
-            call: Call<List<Ingredients>>,
-            response: Response<List<Ingredients>>
-        ) {
-            Log.i("Teste", "onResponse: ${response.message()}")
-        }
-
-        override fun onFailure(call: Call<List<Ingredients>>, t: Throwable) {
-            Log.i("Teste", "onResponse: ${t.message}")
-        }
-
-    })
-
-
-    var listIngredients by remember {
-        mutableStateOf(listOf<Ingredients>(
-
-        ))
+    LaunchedEffect(Unit) {
+        viewModel.fetchIngredients()
     }
+
+//    var listIngredients by remember {
+//        mutableStateOf(listOf<Ingredients>(
+//
+//        ))
+//    }
+
+
 
 
     Column(
@@ -148,7 +133,8 @@ fun TelaIngredientes(telaIngredientesViewModel: TelaIngredientesViewModel) {
                 valorBusca = it
             },
             getIngredientsByName = {
-                // listIngredients = getIngredientsByName(valorBusca)
+
+
             }
         )
 
@@ -162,12 +148,16 @@ fun TelaIngredientes(telaIngredientesViewModel: TelaIngredientesViewModel) {
             shadowElevation = 3.dp
         ) {
 
+        if (listIngredients.isEmpty()) {
+            Text(text = "Loading...")
+        } else {
             LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 110.dp)) {
                 items(listIngredients) { ingrediente ->
                     BotaoIngrediente(nome = ingrediente.name)
                 }
             }
 
+        }
         }
 
         BotaoCriar(
