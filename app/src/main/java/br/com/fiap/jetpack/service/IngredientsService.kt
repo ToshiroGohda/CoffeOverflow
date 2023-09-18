@@ -13,11 +13,11 @@ interface IngredientsService {
 
 
 
-    @GET
-    fun getAllIngredients(): List<Ingredients>
-
-
-
+//    @GET
+//    fun getAllIngredients(): List<Ingredients>
+//
+//
+//
 
 //    @GET
 //    fun getIngredientsByName(nome: String = ""): Call<Ingredients>

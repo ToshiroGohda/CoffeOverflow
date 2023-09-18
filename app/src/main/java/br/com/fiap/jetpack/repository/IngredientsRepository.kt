@@ -6,12 +6,12 @@ import br.com.fiap.jetpack.service.RetroFitFactory
 
 class IngredientsRepository {
 
-    private val ingredientsService = RetroFitFactory().getIngredientsService()
-
-
-    suspend fun getIngredients(): List<Ingredients> {
-        return ingredientsService.getAllIngredients()
-    }
-
+//    private val ingredientsService = RetroFitFactory().getIngredientsService()
+//
+//
+//    suspend fun getIngredients(): List<Ingredients> {
+//        return ingredientsService.getAllIngredients()
+//    }
+//
 
 }

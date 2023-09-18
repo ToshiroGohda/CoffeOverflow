@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -43,24 +44,24 @@ import br.com.fiap.jetpack.components.IngredientesColumn
 @Composable
 fun TelaIngredientes(viewModel: TelaIngredientesViewModel) {
 
-    //val comida = remember { mutableStateListOf<String>() }
-    val comida by viewModel.comida.observeAsState(initial = listOf<String>())
+    val comida = remember { mutableStateListOf<String>() }
+//    val comida by viewModel.comida.observeAsState(initial = listOf<String>())
 
     var valorBusca by remember {
         mutableStateOf("")
     }
 
-    val listIngredients by viewModel.listIngredients.observeAsState(emptyList())
+//    val listIngredients by viewModel.listIngredients.observeAsState(emptyList())
 
-    LaunchedEffect(Unit) {
-        viewModel.fetchIngredients()
-    }
-
-//    var listIngredients by remember {
-//        mutableStateOf(listOf<Ingredients>(
-//
-//        ))
+//    LaunchedEffect(Unit) {
+//        viewModel.fetchIngredients()
 //    }
+
+    var listIngredients by remember {
+        mutableStateOf(listOf<String>(
+
+        ))
+    }
 
 
 
@@ -153,7 +154,7 @@ fun TelaIngredientes(viewModel: TelaIngredientesViewModel) {
         } else {
             LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 110.dp)) {
                 items(listIngredients) { ingrediente ->
-                    BotaoIngrediente(nome = ingrediente.name)
+                    BotaoIngrediente(nome = ingrediente)
                 }
             }
 
@@ -172,6 +173,6 @@ fun TelaIngredientes(viewModel: TelaIngredientesViewModel) {
 @Composable
 fun TelaIngredientesPreview() {
 
-    TelaIngredientes(TelaIngredientesViewModel())
-
+    TelaIngredientes(viewModel = TelaIngredientesViewModel())
+    
 }
