@@ -12,8 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.fiap.jetpack.Telas.TelaIngredientes
-import br.com.fiap.jetpack.Telas.TelaRefeicao
+import br.com.fiap.jetpack.telas.TelaIngredientes
+import br.com.fiap.jetpack.telas.TelaRefeicao
 import br.com.fiap.jetpack.View.TelaIngredientesViewModel
 import br.com.fiap.jetpack.ui.theme.JetpackTheme
 
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = "Ingredientes") {
 
                         composable(route = "Ingredientes") {
-                            TelaIngredientes(TelaIngredientesViewModel())
+                            TelaIngredientes(TelaIngredientesViewModel(), navController)
                         }
 
                         composable(route = "Refeicao") {
@@ -55,7 +55,7 @@ fun JetPackThemePreview() {
     NavHost(navController = navController, startDestination = "Ingredientes") {
 
         composable(route = "Ingredientes") {
-            TelaIngredientes(TelaIngredientesViewModel())
+            TelaIngredientes(TelaIngredientesViewModel(), navController)
         }
 
     }

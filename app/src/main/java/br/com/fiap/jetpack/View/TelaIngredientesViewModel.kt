@@ -14,18 +14,18 @@ class TelaIngredientesViewModel: ViewModel() {
 
 //    private val repository = IngredientsRepository()
 //
-//
-//    private val _comida = MutableLiveData<List<String>>()
-//    val comida: LiveData<List<String>> = _comida
-//
+
+    private val _comida = MutableLiveData<List<String>>()
+    val comida: LiveData<List<String>> = _comida
+
 //    private val _listIngredients = MutableLiveData<List<Ingredients>>()
 //    val listIngredients: LiveData<List<Ingredients>> = _listIngredients
 //
 //
 //
-//    fun onComidaChange(novaComida: String) {
-//        _comida.value = _comida.value?.plus(novaComida) ?: listOf(novaComida)
-//    }
+    fun onComidaChange(novaComida: String) {
+        _comida.value = _comida.value?.plus(novaComida) ?: listOf(novaComida)
+    }
 //
 //
 //    fun fetchIngredients() {

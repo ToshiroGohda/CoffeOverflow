@@ -1,23 +1,12 @@
-package br.com.fiap.jetpack.Telas
+package br.com.fiap.jetpack.telas
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
@@ -38,7 +27,7 @@ fun TelaRefeicao() {
             .fillMaxWidth()
             .fillMaxHeight()
             .background(Color(242, 231, 208, 255)),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = CenterHorizontally,
 
         ) {
 
@@ -57,9 +46,15 @@ fun TelaRefeicao() {
             modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
         )
 
-        SurfaceComida(modifier = Modifier.align(Alignment.CenterHorizontally))
+        SurfaceComida(modifier = Modifier.align(CenterHorizontally))
 
-        BotaoCriar(texto = "Selecionar Prato", modifier = Modifier.align(CenterHorizontally))
+        BotaoCriar(
+            texto = "Selecionar Prato",
+            modifier = Modifier.align(CenterHorizontally),
+            onClick = {
+
+            }
+        )
 
     }
 }

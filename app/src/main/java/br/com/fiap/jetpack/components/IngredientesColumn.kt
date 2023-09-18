@@ -32,7 +32,7 @@ fun IngredientesColumn(comida: List<String> ) {
 @Composable
 fun IngredientesColumnPreview() {
 
-    var comida = listOf("")
+    val comida = listOf("")
 
     IngredientesColumn(comida = comida)
 }

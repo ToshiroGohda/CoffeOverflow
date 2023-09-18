@@ -11,10 +11,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BotaoCriar(texto: String, modifier: Modifier) {
+fun BotaoCriar(texto: String, modifier: Modifier, onClick: () -> Unit) {
 
     Button(
-            onClick = { /*TODO*/ },
+            onClick = onClick,
             shape = RoundedCornerShape(size = 10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(187, 71, 72)

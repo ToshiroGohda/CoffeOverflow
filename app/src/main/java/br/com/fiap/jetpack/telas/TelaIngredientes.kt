@@ -1,4 +1,4 @@
-package br.com.fiap.jetpack.Telas
+package br.com.fiap.jetpack.telas
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,14 +12,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,9 +27,9 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.jetpack.View.TelaIngredientesViewModel
 import br.com.fiap.jetpack.components.BotaoCriar
 import br.com.fiap.jetpack.components.BotaoIngrediente
@@ -40,12 +37,11 @@ import br.com.fiap.jetpack.components.BotaoVoltar
 import br.com.fiap.jetpack.components.BuscarIngredientes
 import br.com.fiap.jetpack.components.IngredientesColumn
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaIngredientes(viewModel: TelaIngredientesViewModel) {
+fun TelaIngredientes(viewModel: TelaIngredientesViewModel, navController: NavController) {
 
-    val comida = remember { mutableStateListOf<String>() }
-//    val comida by viewModel.comida.observeAsState(initial = listOf<String>())
+//    val comida = remember { mutableStateListOf<String>() }
+    val comida by viewModel.comida.observeAsState(initial = listOf())
 
     var valorBusca by remember {
         mutableStateOf("")
@@ -57,10 +53,20 @@ fun TelaIngredientes(viewModel: TelaIngredientesViewModel) {
 //        viewModel.fetchIngredients()
 //    }
 
-    var listIngredients by remember {
-        mutableStateOf(listOf<String>(
-
-        ))
+    val listIngredients by remember {
+        mutableStateOf(
+            listOf(
+                "Frango",
+                "Milho",
+                "Azeite",
+                "Frango",
+                "Milho",
+                "Azeite",
+                "Frango",
+                "Milho",
+                "Azeite",
+            )
+        )
     }
 
 
@@ -112,7 +118,7 @@ fun TelaIngredientes(viewModel: TelaIngredientesViewModel) {
             )
             Divider(modifier = Modifier.padding(start = 40.dp, end = 30.dp))
 
-            if (!comida.isEmpty()) {
+            if (comida.isNotEmpty()) {
                 IngredientesColumn(comida = comida)
             }
 
@@ -149,30 +155,35 @@ fun TelaIngredientes(viewModel: TelaIngredientesViewModel) {
             shadowElevation = 3.dp
         ) {
 
-        if (listIngredients.isEmpty()) {
-            Text(text = "Loading...")
-        } else {
-            LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 110.dp)) {
-                items(listIngredients) { ingrediente ->
-                    BotaoIngrediente(nome = ingrediente)
+            if (listIngredients.isEmpty()) {
+                Text(text = "Loading...")
+            } else {
+                LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 110.dp)) {
+                    items(listIngredients) { ingrediente ->
+                        BotaoIngrediente(nome = ingrediente, onClick = {
+                            viewModel.onComidaChange(ingrediente)
+                        })
+                    }
                 }
-            }
 
-        }
+            }
         }
 
         BotaoCriar(
             texto = "Crie Refeições",
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            onClick = {
+                navController.navigate(route = "Refeicao")
+            }
         )
 
     }
 }
 
-@Preview
-@Composable
-fun TelaIngredientesPreview() {
-
-    TelaIngredientes(viewModel = TelaIngredientesViewModel())
-    
-}
+//@Preview
+//@Composable
+//fun TelaIngredientesPreview() {
+//
+//    TelaIngredientes(viewModel = TelaIngredientesViewModel())
+//
+//}
