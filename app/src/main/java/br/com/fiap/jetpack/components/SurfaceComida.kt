@@ -26,8 +26,8 @@ fun SurfaceComida(modifier: Modifier) {
         LazyColumn(
             modifier = Modifier
                 .padding(10.dp)
-
-                .then(Modifier.height(250.dp))
+                .fillMaxHeight()
+                //.height(250.dp)
         ) {
             items(5) { Comida() }
         }

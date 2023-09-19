@@ -83,7 +83,9 @@ fun TelaIngredientes(viewModel: TelaIngredientesViewModel, navController: NavCon
     )
     {
 
-        BotaoVoltar(modifier = Modifier.align(Alignment.Start))
+        BotaoVoltar(modifier = Modifier.align(Alignment.Start), onClick={
+
+        })
 
         Column(
             modifier = Modifier

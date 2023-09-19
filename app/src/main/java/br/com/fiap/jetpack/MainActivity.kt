@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = "Refeicao") {
-                            TelaRefeicao()
+                            TelaRefeicao(navController)
                         }
 
                     }

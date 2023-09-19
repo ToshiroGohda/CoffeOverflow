@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -122,7 +124,8 @@ fun Comida() {
                 modifier = Modifier
                     .size(110.dp, 28.dp)
                     .padding(start = 5.dp)
-                    .offset(20.dp)
+                    .offset(20.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(187, 71, 72))
             ) {
                 Text(text = "Ver receitas", fontSize = 10.sp)
             }

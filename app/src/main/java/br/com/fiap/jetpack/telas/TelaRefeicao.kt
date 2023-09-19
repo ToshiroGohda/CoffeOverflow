@@ -15,12 +15,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.jetpack.components.BotaoCriar
 import br.com.fiap.jetpack.components.BotaoVoltar
 import br.com.fiap.jetpack.components.SurfaceComida
 
 @Composable
-fun TelaRefeicao() {
+fun TelaRefeicao(navController: NavController) {
 
     Column(
         modifier = Modifier
@@ -32,7 +34,12 @@ fun TelaRefeicao() {
         ) {
 
 
-        BotaoVoltar(modifier = Modifier.align(Start))
+        BotaoVoltar(
+            modifier = Modifier.align(Start),
+            onClick = {
+                navController.navigate(route = "Ingredientes")
+            }
+        )
 
         Text(
             text = "Escolha uma refeição personalizada!",
@@ -63,7 +70,7 @@ fun TelaRefeicao() {
 @Preview
 @Composable
 fun TelaRefeicaoPreview() {
-
-    TelaRefeicao()
+    val navController = rememberNavController()
+    TelaRefeicao(navController)
 
 }

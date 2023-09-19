@@ -15,11 +15,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BotaoVoltar(modifier: Modifier) {
+fun BotaoVoltar(modifier: Modifier, onClick: () -> Unit) {
 
     Row(modifier = modifier) {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = onClick,
             modifier = Modifier
                 .offset(x = (-35).dp, y = (-15).dp)
                 .then(Modifier.size(width = 100.dp, height = 75.dp)),
