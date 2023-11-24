@@ -9,15 +9,16 @@ import retrofit2.http.GET
 
 interface IngredientsService {
 
-    //https://virtserver.swaggerhub.com/CISQUA_1/Meeal/1.0.0/ingredients
+    //http://localhost:8080/ingredients
 
 
 
-//    @GET
-//    fun getAllIngredients(): List<Ingredients>
-//
-//
-//
+    @GET("http://localhost:8080/ingredients")
+    fun getAllIngredients(): Call<List<Ingredients>>
+
+
+
+
 
 //    @GET
 //    fun getIngredientsByName(nome: String = ""): Call<Ingredients>

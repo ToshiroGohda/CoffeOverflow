@@ -5,15 +5,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import br.com.fiap.jetpack.model.Pratos
 
 @Composable
-fun SurfaceComida(modifier: Modifier) {
+fun SurfaceComida(modifier: Modifier, pratos: List<Pratos>) {
     Surface(
         modifier = Modifier
             .padding(top = 20.dp)
@@ -29,7 +31,17 @@ fun SurfaceComida(modifier: Modifier) {
                 .fillMaxHeight()
                 //.height(250.dp)
         ) {
-            items(5) { Comida() }
+            items(pratos) { prato ->
+                Comida(
+                    carbs = prato.carbs,
+                    gordura = prato.gordura,
+                    porcao = prato.porcao,
+                    proteina = prato.proteina,
+                    fibra = prato.fibra,
+                    name = prato.name
+                )
+
+            }
         }
     }
 

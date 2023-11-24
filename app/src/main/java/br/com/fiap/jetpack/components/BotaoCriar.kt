@@ -21,6 +21,7 @@ fun BotaoCriar(texto: String, modifier: Modifier, onClick: () -> Unit) {
             ),
             modifier = Modifier
                 .padding(top = 20.dp)
+                .then(modifier)
         ) {
             Text(text = texto)
         }

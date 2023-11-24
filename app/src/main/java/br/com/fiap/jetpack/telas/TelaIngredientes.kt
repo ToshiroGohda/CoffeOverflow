@@ -16,7 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -27,47 +27,76 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.com.fiap.jetpack.View.TelaIngredientesViewModel
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.jetpack.components.BotaoCriar
 import br.com.fiap.jetpack.components.BotaoIngrediente
 import br.com.fiap.jetpack.components.BotaoVoltar
 import br.com.fiap.jetpack.components.BuscarIngredientes
 import br.com.fiap.jetpack.components.IngredientesColumn
+import br.com.fiap.jetpack.model.Ingredients
+import br.com.fiap.jetpack.service.RetroFitFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
-fun TelaIngredientes(viewModel: TelaIngredientesViewModel, navController: NavController) {
+fun TelaIngredientes(navController: NavController) {
 
-//    val comida = remember { mutableStateListOf<String>() }
-    val comida by viewModel.comida.observeAsState(initial = listOf())
+    var listIngredients by remember {
+        mutableStateOf(listOf<Ingredients>())
+    }
+
+
+
+        val callback = RetroFitFactory().getIngredientsService().getAllIngredients()
+
+
+        callback.enqueue(object : Callback<List<Ingredients>>{
+            override fun onResponse(
+                call: Call<List<Ingredients>>,
+                response: Response<List<Ingredients>>
+            ) {
+                listIngredients = response.body()!!
+            }
+
+            override fun onFailure(call: Call<List<Ingredients>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
+
+
+
+
+    val comida = remember { mutableStateListOf<String>() }
+
 
     var valorBusca by remember {
         mutableStateOf("")
     }
 
-//    val listIngredients by viewModel.listIngredients.observeAsState(emptyList())
 
-//    LaunchedEffect(Unit) {
-//        viewModel.fetchIngredients()
+//    val listIngredients by remember {
+//        mutableStateOf(
+//            listOf(
+//                "Frango",
+//                "Milho",
+//                "Azeite",
+//                "Frango",
+//                "Milho",
+//                "Azeite",
+//                "Frango",
+//                "Milho",
+//                "Azeite",
+//            )
+//        )
 //    }
-
-    val listIngredients by remember {
-        mutableStateOf(
-            listOf(
-                "Frango",
-                "Milho",
-                "Azeite",
-                "Frango",
-                "Milho",
-                "Azeite",
-                "Frango",
-                "Milho",
-                "Azeite",
-            )
-        )
-    }
 
 
 
@@ -163,7 +192,7 @@ fun TelaIngredientes(viewModel: TelaIngredientesViewModel, navController: NavCon
                 LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 110.dp)) {
                     items(listIngredients) { ingrediente ->
                         BotaoIngrediente(nome = ingrediente, onClick = {
-                            viewModel.onComidaChange(ingrediente)
+                            comida.add(ingrediente.name)
                         })
                     }
                 }
@@ -182,10 +211,12 @@ fun TelaIngredientes(viewModel: TelaIngredientesViewModel, navController: NavCon
     }
 }
 
-//@Preview
-//@Composable
-//fun TelaIngredientesPreview() {
-//
-//    TelaIngredientes(viewModel = TelaIngredientesViewModel())
-//
-//}
+
+
+@Preview
+@Composable
+fun TelaIngredientesPreview() {
+
+    TelaIngredientes(navController = rememberNavController())
+
+}

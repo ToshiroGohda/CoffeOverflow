@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Comida() {
+fun Comida(carbs: String, gordura: String, porcao: Int, proteina: String, fibra: String, name: String) {
 
     Column(
         modifier = Modifier
@@ -58,7 +58,7 @@ fun Comida() {
                     .padding(start = 5.dp)
                     .width(250.dp),
                 fontSize = 22.sp,
-                text = "Arroz, Salada verde e frango grelhado",
+                text = name,
             )
             RadioButton(
                 selected = false,
@@ -76,7 +76,7 @@ fun Comida() {
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Carboidratos: 33g",
+                text = "Carboidratos: $carbs",
                 fontSize = 12.sp,
                 modifier = Modifier
                     .fillMaxWidth(0.33f)
@@ -84,14 +84,14 @@ fun Comida() {
 
             )
             Text(
-                text = "Gorduras: 7g",
+                text = "Gorduras: $gordura",
                 fontSize = 12.sp,
                 modifier = Modifier
                     .fillMaxWidth(0.33f)
                     .offset(x = 20.dp)
             )
             Text(
-                text = "1 porção",
+                text = "$porcao porção",
                 fontSize = 12.sp,
                 modifier = Modifier
                     .fillMaxWidth(0.34f)
@@ -105,14 +105,14 @@ fun Comida() {
 
         ) {
             Text(
-                text = "Proteinas: 30g ",
+                text = "Proteinas: $proteina ",
                 fontSize = 12.sp,
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .fillMaxWidth(0.33f)
             )
             Text(
-                text = "Fibra: 2g ",
+                text = "Fibra: $fibra ",
                 fontSize = 12.sp,
                 modifier = Modifier
                     .fillMaxWidth(0.33f)

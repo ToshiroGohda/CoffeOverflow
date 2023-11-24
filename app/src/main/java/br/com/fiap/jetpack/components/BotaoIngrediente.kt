@@ -11,9 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import br.com.fiap.jetpack.model.Ingredients
 
 @Composable
-fun BotaoIngrediente(nome: String, onClick: () -> Unit) {
+fun BotaoIngrediente(nome: Ingredients, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier
@@ -25,6 +26,6 @@ fun BotaoIngrediente(nome: String, onClick: () -> Unit) {
         colors = ButtonDefaults.buttonColors(containerColor = Color(244, 233, 227), contentColor = Color.Black),
 
         ) {
-        Text(text = nome)
+        Text(text = nome.name)
     }
 }
